@@ -1,5 +1,7 @@
 // context
 import React from "react";
+import {EventEmitter} from "events";
+
 const SharedTypes = {
   emitter: React.PropTypes.any,
   rootProps: React.PropTypes.any
