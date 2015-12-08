@@ -42,6 +42,7 @@ export function createRenderer({emitter, render}) {
 
 export class Flux extends EventEmitter {
   constructor(renderer) {
+    super();
     this.state = {};
     this._renderer = createRenderer({emitter: this, render: renderer});
     this.subscribe();
