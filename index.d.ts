@@ -1,6 +1,4 @@
-export var mixin: {
-  dispatch: (eventName: string, ...args: any[]) => boolean;
-};
+import * as React from "react";
 
 export class Component<Props, State> {
   refs: any;
@@ -9,6 +7,13 @@ export class Component<Props, State> {
   context: {
     rootProps: any;
   };
+  dispatch: (eventName: string, ...args: any[]) => boolean;
+}
+export var mixin: {
+  dispatch: (eventName: string, ...args: any[]) => boolean;
+};
+
+export class Component<Props, State> extends React.Component<Props, State> {
   dispatch: (eventName: string, ...args: any[]) => boolean;
 }
 
