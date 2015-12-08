@@ -1,0 +1,9 @@
+{
+  "presets": [
+    "react",
+    "stage-2"
+  ],
+  "plugins": [
+    "transform-es2015-modules-commonjs"
+  ]
+}

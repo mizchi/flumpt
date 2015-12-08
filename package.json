@@ -1,0 +1,19 @@
+{
+  "name": "flumt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/flumt.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-2": "^6.3.13"
+  },
+  "peerDependencies": {
+    "react": ">=0.14"
+  }
+}
