@@ -1,6 +1,6 @@
 {
   "name": "flumt",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Conceptual Implementation of EventEmitter based Flux.",
   "main": "lib/flumt.js",
   "scripts": {
