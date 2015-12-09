@@ -46,13 +46,31 @@ export class Flux extends EventEmitter {
     this.state = {};
     this._renderer = createRenderer({emitter: this, render: renderer});
     this.subscribe();
+    this.updating = false;
+    // this._updatingQueues = []; // TODO
   }
 
   update(nextStateFn) {
-    return Promise.resolve(nextStateFn(this.state)).then(nextState => {
-      this.state = nextState;
+    if (this.updating) {
+      // TODO: implement queue
+      throw new Error("flumt: Update transaction is locked");
+    }
+    this.updating = true;
+
+    const promiseOrState = nextStateFn(this.state);
+    if (promiseOrState instanceof Promise) {
+      this.emit(":start-updating");
+      return promiseOrState.then(nextState => {
+        this.state = nextState;
+        this._renderer(this.render(this.state));
+        this.updating = false;
+        this.emit(":end-updating");
+      });
+    } else {
+      this.state = promiseOrState;
       this._renderer(this.render(this.state));
-    });
+      this.updating = false;
+    }
   }
 
   render(props) {
