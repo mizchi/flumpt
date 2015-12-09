@@ -1,14 +1,5 @@
 import * as React from "react";
 
-export class Component<Props, State> {
-  refs: any;
-  props: Props;
-  state: State;
-  context: {
-    rootProps: any;
-  };
-  dispatch: (eventName: string, ...args: any[]) => boolean;
-}
 export var mixin: {
   dispatch: (eventName: string, ...args: any[]) => boolean;
 };
