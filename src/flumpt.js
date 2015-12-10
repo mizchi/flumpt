@@ -41,10 +41,11 @@ export function createRenderer({emitter, render}) {
 }
 
 export class Flux extends EventEmitter {
-  constructor(renderer) {
+  constructor({renderer, initialState}) {
     super();
-    this.state = {};
+    this.state = initialState ? {};
     this._renderer = createRenderer({emitter: this, render: renderer});
+    this._renderedElement = null;
     this.subscribe();
     this.updating = false;
     // this._updatingQueues = []; // TODO
@@ -62,14 +63,20 @@ export class Flux extends EventEmitter {
       this.emit(":start-updating");
       return promiseOrState.then(nextState => {
         this.state = nextState;
-        this._renderer(this.render(this.state));
+        this._renderedElement = this._renderer(this.render(this.state));
         this.updating = false;
         this.emit(":end-updating");
       });
     } else {
       this.state = promiseOrState;
-      this._renderer(this.render(this.state));
+      this._renderedElement = this._renderer(this.render(this.state));
       this.updating = false;
+    }
+  }
+
+  _setState(...args) {
+    if (this._renderedElement) {
+      this._renderedElement.setState(...args)
     }
   }
 

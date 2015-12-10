@@ -9,7 +9,7 @@ export class Component<Props, State> extends React.Component<Props, State> {
 }
 
 export class Flux<State> {
-  constructor(render: Function);
+  constructor(initalizers: {renderer: Function; initialState: State});
   state: State;
   on: (eventName: string, fn: Function) => void;
   update(updater: (s?: State) => State | Promise<State>): Promise<any>;

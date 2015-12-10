@@ -1,14 +1,14 @@
 {
-  "name": "flumt",
-  "version": "0.0.10",
+  "name": "flumpt",
+  "version": "0.1.0",
   "description": "Conceptual Implementation of EventEmitter based Flux.",
-  "main": "lib/flumt.js",
+  "main": "lib/flumpt.js",
   "scripts": {
     "prepublish": "babel src --out-dir lib",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "mizchi",
+  "license": "MIT",
   "peerDependencies": {
     "react": ">=0.14"
   },
@@ -24,10 +24,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mizchi/flumt.git"
+    "url": "git+https://github.com/mizchi/flumpt.git"
   },
   "bugs": {
-    "url": "https://github.com/mizchi/flumt/issues"
+    "url": "https://github.com/mizchi/flupmt/issues"
   },
-  "homepage": "https://github.com/mizchi/flumt#readme"
+  "homepage": "https://github.com/mizchi/flumpt#readme",
+  "dependencies": {
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.3.13",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-stage-2": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "react": "^0.14.3"
+  }
 }

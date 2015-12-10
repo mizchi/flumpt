@@ -1,9 +1,12 @@
-# Flumt
+# Flumpt
 
 Conceptual Implementation of EventEmitter based Flux.
 
-// TODO Documentation
+## Concepts
 
+Flux is (...What you think) but all you need is just an `EventEmitter`.
+
+Interface is inpired by `Om`.
 
 ## Example
 
@@ -11,18 +14,87 @@ Conceptual Implementation of EventEmitter based Flux.
 
 ```js
 import * as React from "react";
-import {Flux} from "flumt";
+import {Flux, Component} from "flumpt";
 import {render} from "react-dom";
 
-class App extends Flux<{}> {
-  render(prors) {
-    return <divHelloWorld</div>;
+class MyComponent extends Component {
+  componentDidMount() {
+    this.dispatch("increment");
+  }
+  render() {
+    return (
+      <div>
+        {this.props.counter}
+        <button onClick={() => this.dispatch("increment")}>increment</button>
+      </div>
+    );
+  }
+}
+
+class App extends Flux {
+  subscribe() { // `subscribe` is called once in constructor
+    this.on("increment", () => {
+      this.update(({count}) => {
+        return {count: count + 1}; // return next state
+      });
+    });
+  }
+  render(state) {
+    return <MyComponent {}...state}/>;
   }
 }
 
 // Setup renderer
-const app = new App(el => {
-  render(el, document.querySelector("#root"));
+const app = new App({
+  renderer: el => {
+    render(el, document.querySelector("#root"));
+  },
+  initialState: {count: 0}
 });
-app.update(_initialState => ({}))
+
+app.on(":start-updating", () => {
+  // overlay ui lock
+});
+app.on(":end-updating", () => {
+  // hide ui lock
+});
+
+app.update(_initialState => ({count: 1})) // it fires rendering
 ```
+
+- `Flux` is `EventEmitter`
+- `Component` is just `ReactComponent` with `dispatch` method.
+  - You can also use `flumpt.mixin` with React.createClass
+
+## With TypeScript
+
+Need `node react reace-dom es6-promise` type definitions.
+
+- `npm install -g dtsm`
+- `dtsm install node react reace-dom`
+
+
+```js
+import {Flux} from "flumpt";
+
+interface State {
+  count: number;
+}
+
+class App extends Flux<State> {
+  subscribe() {
+    this.on("increment", () => {
+      this.update((s: State) => {
+        return {count: count + 1};
+      });
+    });
+  }
+  // ... render or others
+}
+```
+
+See detail in `index.d.ts`
+
+## LICENSE
+
+MIT
