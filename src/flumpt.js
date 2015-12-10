@@ -66,7 +66,7 @@ export class Flux extends EventEmitter {
     }
 
     const postUpdate = nextState => {
-      this.state = _nextState;
+      this.state = nextState;
       this._renderedElement = this._renderer(this.render(this.state));
       this.updating = false;
     };
