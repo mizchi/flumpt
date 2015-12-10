@@ -41,9 +41,10 @@ export function createRenderer({emitter, render}) {
 }
 
 export class Flux extends EventEmitter {
-  constructor({renderer, initialState}) {
+  constructor({renderer, initialState, middlewares}) {
     super();
     this.state = initialState ? initialState : {};
+    this.middlewares = middlewares ? middlewares : [];
     this._renderer = createRenderer({emitter: this, render: renderer});
     this._renderedElement = null;
     this.subscribe();
@@ -58,19 +59,27 @@ export class Flux extends EventEmitter {
     }
     this.updating = true;
 
-    const promiseOrState = nextStateFn(this.state);
+    const applyMiddlewares = nextState => {
+      return this.middlewares.reduce((s, next) => {
+        return next(s);
+      }, nextState);
+    }
+
+    const postUpdate = nextState => {
+      this.state = _nextState;
+      this._renderedElement = this._renderer(this.render(this.state));
+      this.updating = false;
+    };
+
+    const promiseOrState = applyMiddlewares(nextStateFn(this.state));
     if (promiseOrState instanceof Promise) {
       this.emit(":start-updating");
       return promiseOrState.then(nextState => {
-        this.state = nextState;
-        this._renderedElement = this._renderer(this.render(this.state));
-        this.updating = false;
+        postUpdate(nextState);
         this.emit(":end-updating");
       });
     } else {
-      this.state = promiseOrState;
-      this._renderedElement = this._renderer(this.render(this.state));
-      this.updating = false;
+      postUpdate(promiseOrState);
     }
   }
 

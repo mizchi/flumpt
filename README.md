@@ -49,7 +49,15 @@ const app = new App({
   renderer: el => {
     render(el, document.querySelector("#root"));
   },
-  initialState: {count: 0}
+  initialState: {count: 0},
+  middlewares: [
+    // logger
+    //   it may get state before unwrap promise
+    (state) => {
+      console.log(state);
+      return state
+    }
+  ]
 });
 
 app.on(":start-updating", () => {
@@ -65,6 +73,11 @@ app.update(_initialState => ({count: 1})) // it fires rendering
 - `Flux` is `EventEmitter`
 - `Component` is just `ReactComponent` with `dispatch` method.
   - You can also use `flumpt.mixin` with React.createClass
+
+## Middlewares
+
+Middleware function type is `<T>(t: T) => T | Promise<T>` or  `<T>(t: Promise<T>) => Promise<T>;`. (Use Promise.resolve if you consider promise)
+`Flux#render(state)` is always promise unwrapped promise but a middelware handle raw nextState received by `Flux#update`.
 
 ## With TypeScript
 
