@@ -40,7 +40,7 @@ class App extends Flux {
     });
   }
   render(state) {
-    return <MyComponent {}...state}/>;
+    return <MyComponent {...state}/>;
   }
 }
 
