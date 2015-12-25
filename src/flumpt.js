@@ -155,3 +155,24 @@ export class Flux extends EventEmitter {
     // override me
   }
 }
+
+export class Incubator extends Provider {
+  constructor(...args) {
+    super(...args);
+    this._flux = this.initContextFlux();
+  }
+
+  initContextFlux() {
+    throw "override me";
+  }
+
+  componentDidMount() {
+    // Rewrite itself
+    this._flux.update(() => this._flux.state);
+  }
+
+  // it is used only initial render
+  render() {
+    return this._flux.render(this._flux.state);
+  }
+}

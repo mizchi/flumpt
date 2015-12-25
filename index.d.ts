@@ -15,3 +15,7 @@ export class Flux<State> {
   update(updater: (s?: State) => State | Promise<State>): Promise<any>;
   subscribe(): void;
 }
+
+export class Incubator<State> {
+  initContextFlux(): Flux<State>;
+}
