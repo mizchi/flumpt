@@ -1,0 +1,25 @@
+{
+  "name": "sample-tsify-front-proj",
+  "version": "1.0.0",
+  "description": "sample",
+  "main": "index.js",
+  "scripts": {
+    "watch": "watchify -t babelify -o public/bundle.js lib/index.js -v",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mizchi",
+  "license": "MIT",
+  "dependencies": {
+    "babel-core": "^6.3.26",
+    "babelify": "^7.2.0",
+    "flumpt": "^0.1.4",
+    "react": "^0.14.5",
+    "react-dom": "^0.14.5"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "browserify": "^12.0.1",
+    "watchify": "^3.6.1"
+  }
+}
