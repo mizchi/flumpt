@@ -24,7 +24,7 @@ class MyComponent extends Component {
   render() {
     return (
       <div>
-        {this.props.counter}
+        {this.props.count}
         <button onClick={() => this.dispatch("increment")}>increment</button>
       </div>
     );
