@@ -60,10 +60,10 @@ const app = new App({
   ]
 });
 
-app.on(":start-updating", () => {
+app.on(":start-async-updating", () => {
   // overlay ui lock
 });
-app.on(":end-updating", () => {
+app.on(":end-anync-updating", () => {
   // hide ui lock
 });
 
