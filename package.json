@@ -33,5 +33,7 @@
     "url": "https://github.com/mizchi/flumpt/issues"
   },
   "homepage": "https://github.com/mizchi/flumpt#readme",
-  "dependencies": {}
+  "dependencies": {
+    "react-motion": "^0.3.1"
+  }
 }

@@ -55,7 +55,7 @@ export class Flux extends EventEmitter {
     this._renderedElement = null;
 
     this.updating = false;
-    this._updatingQueues = []; // TODO
+    this._updatingQueue = []; // TODO
     this._updatingPromise = null;
 
     // setup self
@@ -66,7 +66,7 @@ export class Flux extends EventEmitter {
     const inAsync = !!this._updatingPromise;
 
     if (inAsync) {
-      this._updatingQueues.length = 0;
+      this._updatingQueue.length = 0;
       this._updatingPromise = null;
       this.updating = false;
     }
@@ -83,7 +83,7 @@ export class Flux extends EventEmitter {
   update(nextStateFn) {
     // if app is updating, add fn to queues and return current promise;
     if (this.updating) {
-      this._updatingQueues.push(nextStateFn);
+      this._updatingQueue.push(nextStateFn);
       return this._updatingPromise;
     }
 
@@ -116,7 +116,7 @@ export class Flux extends EventEmitter {
 
       // if there is left queue after first async,
       const updateLoop = (appliedState) => {
-        const nextFn = this._updatingQueues.shift();
+        const nextFn = this._updatingQueue.shift();
         if (nextFn == null) {
           this._finishUpdate(appliedState);
           endUpdate();
@@ -128,7 +128,7 @@ export class Flux extends EventEmitter {
               nextFn(appliedState)
             )
           ).then(s => {
-            this.emit(":process-async-updating", s, appliedState, this._updatingQueues.length);
+            this.emit(":process-async-updating", s, appliedState, this._updatingQueue.length);
             this.emit(":process-updating", s, appliedState);
             updateLoop(s); // recursive loop
           });
