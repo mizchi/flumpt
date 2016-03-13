@@ -154,6 +154,10 @@ export class Flux extends EventEmitter {
   subscribe() {
     // override me
   }
+
+  start() {
+    this._finishUpdate(this.state);
+  }
 }
 
 export class Incubator extends Provider {

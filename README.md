@@ -67,7 +67,7 @@ app.on(":end-anync-updating", () => {
   // hide ui lock
 });
 
-app.update(_initialState => ({count: 1})) // it fires rendering
+app.start(); // it fires rendering
 ```
 
 - `Flux` is `EventEmitter`
