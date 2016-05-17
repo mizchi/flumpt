@@ -75,7 +75,7 @@ export class Flux extends EventEmitter {
     this._renderedElement = this._renderer(this.render(this.state));
 
     if (inAsync) {
-      this.emit(":end-anync-updating");
+      this.emit(":end-async-updating");
     }
     return Promise.resolve();
   }

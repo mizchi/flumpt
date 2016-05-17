@@ -63,7 +63,7 @@ const app = new App({
 app.on(":start-async-updating", () => {
   // overlay ui lock
 });
-app.on(":end-anync-updating", () => {
+app.on(":end-async-updating", () => {
   // hide ui lock
 });
 
