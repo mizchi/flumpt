@@ -16,6 +16,7 @@
     "test": "test"
   },
   "devDependencies": {
+    "ava": "^0.15.1",
     "babel-cli": "^6.3.15",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.3.13",
     "babel-polyfill": "^6.3.14",
