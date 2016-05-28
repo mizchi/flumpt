@@ -33,5 +33,8 @@
   "bugs": {
     "url": "https://github.com/mizchi/flumpt/issues"
   },
-  "homepage": "https://github.com/mizchi/flumpt#readme"
+  "homepage": "https://github.com/mizchi/flumpt#readme",
+  "dependencies": {
+    "promised-reducer": "^0.1.0"
+  }
 }
