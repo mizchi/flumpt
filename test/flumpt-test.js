@@ -15,10 +15,9 @@ class TestApp extends Flux {
 }
 
 // Setup renderer
-var _buffer = "";
-const app = new TestApp({
+const createTestApp = (buffer) => new TestApp({
   renderer: el => {
-    _buffer = renderToStaticMarkup(el);
+    buffer.out = renderToStaticMarkup(el);
   },
   initialState: {count: 0},
   middlewares: [
@@ -34,12 +33,18 @@ const app = new TestApp({
 function wait(ms = 100) {return new Promise(done => setTimeout(done, ms));}
 
 const {ok, equal} = require("assert");
+// const test = require("ava");
+
+
 (async () => {
+  var buffer = {out: ""}
+  var app = createTestApp(buffer);
   // case 1
   app.update(s => ({count: 1}));
   ok(!app.updating);
-  console.log("buffer", _buffer)
-  ok(_buffer === "<div>1</div>");
+  console.log("buffer", buffer.out)
+  ok(buffer.out === "<div>1</div>");
+  console.log("pass case 1");
 
   // case 2
   const p1 = app.update(async (s) => {
@@ -47,11 +52,12 @@ const {ok, equal} = require("assert");
     return {count: 2}
   });
 
-  ok(_buffer === "<div>1</div>");
+  ok(buffer.out === "<div>1</div>");
   await p1;
-  ok(_buffer === "<div>2</div>");
+  ok(buffer.out === "<div>2</div>");
+  console.log("pass case 2");
 
-  // case 2
+  // case 3
   const p2 = app.update(async (s) => {
     await wait(100);
     return {count: 3}
@@ -61,12 +67,12 @@ const {ok, equal} = require("assert");
     await wait(100);
     return {count: 4}
   });
-  ok(app._updatingQueues.length === 1);
+  ok(app._updatingQueue.length === 1);
   ok(p2 === p3);
   await p2;
-  ok(_buffer === "<div>4</div>");
+  ok(buffer.out === "<div>4</div>");
 
-  // case 2
+  // case 4
   const p4 = app.update(async (s) => {
     await wait(100);
     return {count: 3}
@@ -76,7 +82,7 @@ const {ok, equal} = require("assert");
     await wait(100);
     return {count: 4}
   });
-  ok(app._updatingQueues.length === 1);
+  ok(app._updatingQueue.length === 1);
   const p6 = app.update(async (s) => {
     await wait(100);
     return {count: 2}
@@ -84,12 +90,14 @@ const {ok, equal} = require("assert");
   ok(p4 === p5);
   ok(p5 === p6);
 
-  ok(app._updatingQueues.length === 2);
+  ok(app._updatingQueue.length === 2);
   await p6;
-  ok(_buffer === "<div>2</div>");
+  ok(buffer.out === "<div>2</div>");
+  console.log("pass case 4");
 
   // finish
-  console.log("pass");
+  console.log("all test passed");
 })().catch(e => {
+  console.log("catched", e)
   throw e;
 });
