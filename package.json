@@ -10,7 +10,7 @@
   "author": "mizchi",
   "license": "MIT",
   "peerDependencies": {
-    "react": ">=0.14"
+    "react": ">=15"
   },
   "directories": {
     "test": "test"

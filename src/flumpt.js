@@ -63,3 +63,36 @@ export class Flux extends PromisedReducer {
     // override me
   }
 }
+
+export function withFlux(subscriber, initialState = {}) {
+  const pr = new PromisedReducer(initialState)
+  return Wrapped => class WithFlux extends React.Component {
+    static get childContextTypes() {return SharedTypes;}
+
+    getChildContext() {
+      const rootProps = Object.assign({}, this.props, this.state)
+      return {
+        emitter: pr,
+        rootProps
+      };
+    }
+
+    constructor (props) {
+      super(props);
+      this.state = initialState
+      subscriber(pr.update.bind(pr), pr.on.bind(pr))
+      pr.on(":update", () => {
+        this.setState(pr.state)
+      })
+    }
+
+    componentWillUnmount() {
+      pr.removeAllListeners()
+      pr.state = null
+    }
+
+    render() {
+      return <Wrapped {...Object.assign({}, this.props, this.state)}/>
+    }
+  }
+}
