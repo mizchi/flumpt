@@ -79,7 +79,7 @@ Added by v0.3.0. Need babel-plugin-transform-decorators-legacy.
 
 ```js
 import React from 'react'
-import {withFlux, dispatchable} from '../../src/flumpt'
+import {withFlux, dispatchable} from 'flumpt'
 
 @dispatchable
 class CounterIncrement extends React.Component {
