@@ -28,13 +28,6 @@ export class Component extends React.Component {
   }
 }
 
-export const mixin = {
-  contextTypes: SharedTypes,
-  dispatch(...args) {
-    return this.context.emitter.emit(...args);
-  }
-};
-
 export function createRenderer({emitter, render}) {
   return el => {
     return render(<Provider emitter={emitter}>{el}</Provider>);

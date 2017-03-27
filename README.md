@@ -72,7 +72,6 @@ app.update(_initialState => ({count: 1})) // it fires rendering
 
 - `Flux` is `EventEmitter`
 - `Component` is just `ReactComponent` with `dispatch` method.
-  - You can also use `flumpt.mixin` with React.createClass
 
 ## Middlewares
 
