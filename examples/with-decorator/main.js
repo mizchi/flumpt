@@ -1,10 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {withFlux, Component} from '../../src/flumpt'
+import {withFlux, dispatchable, Component} from '../../src/flumpt'
 
-class CounterIncrement extends Component {
+@dispatchable
+class CounterIncrement extends React.Component {
   render() {
-    return <button onClick={_ev => this.dispatch('increment')}>+1</button>
+    return <button onClick={_ev => this.context.dispatch('increment')}>+1</button>
   }
 }
 

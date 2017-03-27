@@ -4,7 +4,7 @@ import {EventEmitter} from "events";
 import PromisedReducer from "promised-reducer"
 
 const SharedTypes = {
-  emitter: React.PropTypes.any,
+  dispatch: React.PropTypes.any,
   rootProps: React.PropTypes.any
 };
 
@@ -12,7 +12,7 @@ export class Provider extends React.Component {
   static get childContextTypes() {return SharedTypes;}
   getChildContext() {
     return {
-      emitter: this.props.emitter,
+      dispatch: this.props.emitter.emit.bind(this.props.emitter),
       rootProps: this.props
     };
   }
@@ -24,8 +24,13 @@ export class Provider extends React.Component {
 export class Component extends React.Component {
   static get contextTypes() {return SharedTypes;}
   dispatch(...args) {
-    return this.context.emitter.emit(...args);
+    return this.context.dispatch(...args);
   }
+}
+
+export function dispatchable(Wrapped) {
+  Wrapped.contextTypes = SharedTypes
+  return Wrapped
 }
 
 export function createRenderer({emitter, render}) {
@@ -65,7 +70,7 @@ export function withFlux(subscriber, initialState = {}) {
     getChildContext() {
       const rootProps = Object.assign({}, this.props, this.state)
       return {
-        emitter: pr,
+        dispatch: pr.emit.bind(pr),
         rootProps
       };
     }
@@ -81,7 +86,6 @@ export function withFlux(subscriber, initialState = {}) {
 
     componentWillUnmount() {
       pr.removeAllListeners()
-      pr.state = null
     }
 
     render() {
