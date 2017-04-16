@@ -37,6 +37,7 @@
   },
   "homepage": "https://github.com/mizchi/flumpt#readme",
   "dependencies": {
-    "promised-reducer": "^0.1.0"
+    "promised-reducer": "^0.1.0",
+    "prop-types": "^15.5.8"
   }
 }

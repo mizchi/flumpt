@@ -1,11 +1,12 @@
 // context
 import React from "react";
+import PropTypes from "prop-types";
 import {EventEmitter} from "events";
 import PromisedReducer from "promised-reducer"
 
 const SharedTypes = {
-  dispatch: React.PropTypes.any,
-  rootProps: React.PropTypes.any
+  dispatch: PropTypes.any,
+  rootProps: PropTypes.any
 };
 
 export class Provider extends React.Component {
