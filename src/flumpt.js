@@ -61,6 +61,10 @@ export class Flux extends PromisedReducer {
   subscribe() {
     // override me
   }
+
+  start() {
+    this._finishUpdate(this.state);
+  }
 }
 
 export function withFlux(subscriber, initialState = {}) {
