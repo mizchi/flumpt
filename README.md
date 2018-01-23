@@ -60,13 +60,6 @@ const app = new App({
   ]
 });
 
-app.on(":start-async-updating", () => {
-  // overlay ui lock
-});
-app.on(":end-anync-updating", () => {
-  // hide ui lock
-});
-
 app.update(_initialState => ({count: 1})) // it fires rendering
 ```
 
